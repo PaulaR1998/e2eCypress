@@ -1,0 +1,2 @@
+Cypress.Commands.add('auth', () => { })
+
