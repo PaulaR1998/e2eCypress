@@ -19,7 +19,7 @@ describe('', () => {
             .should('be.visible');
         cy.contains(('PDV')).should('be.visible');
         cy.contains(('Vendedor')).should('be.visible');
-        cy.contains(' Existe indicação de venda?').should('be.visible');
+        cy.contains('Existe indicação de venda?').should('be.visible');
         cy.get('.is-active > .h-full').click();
         cy.get('.text-02 > .h-full').click();
         //validar botão voltar tela informação de vendas
@@ -29,8 +29,10 @@ describe('', () => {
         cy.get('#nome-1').type('Teste Teste Teste')
         cy.get('.step-buttons > :nth-child(2)').click();
         //validar textos
+        cy.wait(3000);
         cy.contains('Este passo é muito importante, o cliente deve concordar com os termos de cessão de dados! Mostre o documento, caso ele esteja de acordo, clique em “concordo com os termos de cessão de dados como cliente”.')
             .should('be.visible');
+        cy.wait(2000);
         cy.contains('Informações de venda')
             .should('be.visible');
         cy.contains('Preencha as informações de PDV, vendedor e indicação.')
@@ -47,7 +49,7 @@ describe('', () => {
         cy.get('.text-right > .brand-primary-text').click();
         cy.get('.tao-checkbox__input').click();
         cy.get('.step-buttons > :nth-child(2)').click();
-        cy.wait(1000);
+        cy.wait(2000);
         //validar tela dados pessoais
         cy.contains('Para encontrar as melhores as ofertas disponíveis para o cliente, precisamos que preencha os dados solicitados abaixo com atenção para evitar divergência.')
             .should('be.visible');
@@ -95,9 +97,8 @@ describe('', () => {
         cy.contains('Deve ser maior de 18 anos')
             .should('be.visible');
         cy.get('#datadenascimento-1').clear();
-        cy.wait(2000);
+        cy.wait(1000);
         cy.get('#datadenascimento-1').type('14111998');
-
         //Nome da mãe
         cy.contains('*Nome da Mãe')
             .should('be.visible');
@@ -110,7 +111,6 @@ describe('', () => {
             .should('be.visible');
         cy.get('#nomedame-1').clear();
         cy.get('#nomedame-1').type('Teste Teste');
-        cy.wait(1000);
         //verifica mensagem de e-mail
         cy.contains('*E-mail')
             .should('be.visible');
@@ -121,7 +121,6 @@ describe('', () => {
         cy.contains('E-mail inválido')
             .should('be.visible');
         cy.get('#email-1').type('teste22@yopmail.com');
-        cy.wait(1000);
         //verficar telefone celular
         cy.contains('*Telefone Celular')
             .should('be.visible');
@@ -173,15 +172,62 @@ describe('', () => {
             .should('be.visible');
         cy.contains('Escolha a modalidade de venda para o plano Pré')
             .should('be.visible');
-        cy.get('.text-02 > .h-full').click();
+        cy.wait(1000);
+        cy.contains('Portabilidade')
+            .should('be.visible').click();
+        cy.wait(1000);
         cy.contains('Deseja gerar um número temporário?')
-            .should('be.visibe');
+            .should('be.visible');
         cy.contains('DDD')
-            .should('be.visibe');
+            .should('be.visible');
         cy.contains('Número Portado')
-            .should('be.visibe');
+            .should('be.visible');
         cy.contains('ICCID')
-            .should('be.visibe');
+            .should('be.visible');
+        cy.get('#promoter-participation > .w-full > .text-02 > .h-full').click();
+        cy.contains('Informação importante')
+            .should('be.visible');
+        cy.contains('Ao escolher que o cliente NÃO deseja um número temporário, não será possível aplicar o desconto e a fidelização do aparelho. O plano só será ativado após a conclusão da janela de portabilidade.')
+            .should('be.visible');
+        cy.get('.w-full > .text-01').click();
+        cy.get('#promoter-participation > .w-full > .text-02 > .h-full').click();
+        cy.get('.close > .tao-icon').click();
+        cy.get('#promoter-participation > .w-full > .text-02 > .h-full').click();
+        cy.get('.tao__form-group-dropdown > .tao__form-input > .icon__form > .tao__icon').click();
+        cy.get('.form__list > :nth-child(1) > .block').contains('11').click();
+        cy.get('#nmeroportado-1').click().blur();
+        cy.contains('Número Portado')
+            .should('be.visible');
+        cy.contains('O campo é obrigatório')
+            .should('be.visible');
+        cy.get('#nmeroportado-1').type('9999');
+        cy.contains('Mínimo de 8 caracteres')
+            .should('be.visible');
+        cy.get('#nmeroportado-1').type('999999999');
+        cy.get('#iccid-1').click().blur();
+        cy.contains('O campo é obrigatório')
+            .should('be.visible');
+        cy.get('#iccid-1').type('8955000')
+        cy.contains('ICCID inválido')
+            .should('be.visible');
+        cy.get('#iccid-1').type('89555000000000000000');
+        cy.get('.iccid-informative > .tao__icon').click();
+        cy.contains('O que é um ICCID?')
+            .should('be.visible');
+        cy.contains('ICCID é um número único atribuído a cada cartão SIM utilizado em dispositivos móveis. Esse código é essencial para a identificação e autenticação do cartão SIM, permitindo que ele se conecte à rede de telefonia móvel.')
+            .should('be.visible');
+        cy.get('.img > img')
+            .should('be.visible');
+        cy.get('.close > .tao-icon > use').click();
+        cy.get('.col-7 > .tao__form-input > .icon__form > .tao__icon').click();
+        cy.get('.img > img')
+            .should('be.visible');
+        cy.contains('Passe o leitor virado na vertical, em cima do código de barras do ICCID.')
+            .should('be.visible');
+        cy.get('.close > .tao-icon > use').click();
+        cy.get('.col-7 > .tao__form-input > .icon__form > .tao__icon').click();
+        cy.get('.m-content > .tao__btn').click();
+
 
     });
 
