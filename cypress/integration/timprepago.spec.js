@@ -4,7 +4,7 @@ describe('', () => {
         cy.log('123');
     });
     it('Login', () => {
-
+        cy.wait(5000);
     });
     it.only('Ativacao de operadoras', () => {
         cy.get('#card-activation-01').click();
@@ -12,7 +12,7 @@ describe('', () => {
         cy.get('[href="/dashboard/activation/tim"]').click();
         // botão pre pago
         cy.contains('TIM Pré Top').click();
-        cy.wait(5000);
+        cy.wait(2000);
         //Valdar campos da tela obrigatórios
         //label de pdv e vendedor feito em back não editavél
         cy.contains('Olá, eu sou o João e vou te ajudar a realizar mais uma venda. Bora para a etapa de indicação?')
@@ -227,6 +227,27 @@ describe('', () => {
         cy.get('.close > .tao-icon > use').click();
         cy.get('.col-7 > .tao__form-input > .icon__form > .tao__icon').click();
         cy.get('.m-content > .tao__btn').click();
+        cy.get('.close > .tao-icon').click();
+        cy.get('.step-buttons > :nth-child(2)').click();
+        cy.get('.modal-body').contains('Aguarde enquanto buscamos os melhores')
+            .should('be.visible');
+        cy.wait(5000);
+        //validando Simulador de ofertas  
+        cy.contains('Simulador e Ofertas')
+            .should('be.visible');
+        cy.contains('Selecione uma oferta foco ou monte seu combo')
+            .should('be.visible');
+        cy.contains('Móvel')
+            .should('be.visible');
+        cy.contains('Pré')
+            .should('be.visible');
+        cy.contains('Controle Express')
+            .should('be.visible');
+        cy.contains('Venda com dispositivo')
+            .should('be.visible');
+        // icone validação pelo seletor
+        //cy.get('.category-icon').should('be.visible');
+        cy.get('[class="tao-icon mini category-icon"]').should('be.visible');
 
 
     });
