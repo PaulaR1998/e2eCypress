@@ -1,7 +1,6 @@
 describe('', () => {
     beforeEach(() => {
         cy.auth();
-        cy.log('123');
     });
     it('Login', () => {
         cy.wait(5000);
@@ -49,6 +48,26 @@ describe('', () => {
         cy.get('.text-right > .brand-primary-text').click();
         cy.get('.tao-checkbox__input').click();
         cy.get('.step-buttons > :nth-child(2)').click();
+        cy.get('.text-right > .brand-primary-text').invoke('removeAttr', 'target').click();
+        cy.get('a[target="_blank"]').then(($a) => {
+            const href = $a.prop('href');
+            $a.removeAttr('target');
+            // Forçar a navegação na mesma aba
+            cy.visit(href);
+        });
+
+        // Aguarde a nova página carregar
+        cy.url().should('include', 'termo-privacidade-tradeappone-v2.pdf');
+
+        // Voltar para a página anterior
+        cy.go('back');
+
+        // Verifique se voltou para a página anterior
+        cy.url().should('not.include', 'termo-privacidade-tradeappone-v2.pdf');
+
+
+
+
         cy.wait(2000);
         //validar tela dados pessoais
         cy.contains('Para encontrar as melhores as ofertas disponíveis para o cliente, precisamos que preencha os dados solicitados abaixo com atenção para evitar divergência.')
@@ -247,10 +266,31 @@ describe('', () => {
             .should('be.visible');
         // icone validação pelo seletor
         //cy.get('.category-icon').should('be.visible');
-        cy.get('[class="tao-icon mini category-icon"]').should('be.visible');
+        cy.get('[class="tao-icon mini category-icon"]')
+            .should('be.visible');
+        cy.get('[class="tao-icon mini"]')
+            .should('be.visible');
+        cy.get('[class="tao-icon mini triangulation-icon"]')
+            .should('be.visible');
+        cy.get('[class="container"]')
+            .should('be.visible');
+        cy.get('.has-triangulation > .tao__row > .tao__radio-group > .w-full > .text-02 > .h-full')
+            .click();
+        cy.get('.product-container').contains('TIM Pré Top')
+            .should('be.visible');
+        //validar valor 0 para pré pago
+        cy.get('.product-price').contains('R$ 0,00 / mês')
+            .should('be.visible');
+        cy.get('.product-subtitle > .text-brand-primary').click();
+        cy.get('.close > .tao-icon > use').click();
+
+
+
 
 
     });
+
+
 
 
 
